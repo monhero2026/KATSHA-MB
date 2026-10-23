@@ -1,25 +1,34 @@
-<p align="center">
-<img src="https://files.catbox.moe/3nq2s7.jpg" width="320"/>
-</p>
-
-<h1 align="center">KATSHA MB - MD BOT</h1>
+<h1 align="center"> KATSHA MB - MD BOT V1 </h1>
 
 <p align="center">
-<img src="https://img.shields.io/badge/KATSHA-MB%20V1-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/>
-<img src="https://img.shields.io/badge/Multi%20Device-ON-blue?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Pair%20Code-8%20Digits-orange?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/KATSHA%20MB-V1-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
+<img src="https://img.shields.io/badge/MULTI%20DEVICE-ON-blue?style=for-the-badge" />
+<img src="https://img.shields.io/badge/PAIR%20CODE-8%20Digits-orange?style=for-the-badge" />
+<img src="https://img.shields.io/badge/DASHBOARD-REAL%20TIME-green?style=for-the-badge" />
 </p>
 
 ---
 
-### 🚀 Qu'est-ce que KATSHA MB ?
-Bot WhatsApp 100% Multi-Appareil, rapide, stable et original. Dashboard en temps réel et liaison par code de pairing 8 chiffres.
+### 🚀 KATSHA MB - C'EST QUOI ?
 
-### ⚡ INSTALLATION RAPIDE - RAILWAY
+> Bot WhatsApp **100% Multi-Appareil**
+> Connexion par **Code Pairing 8 chiffres**
+> **Dashboard** en temps réel
+> Rapide, Stable, Original
+
+Modèle perso KATSHA MB, inspiré par Atsushi MD mais code 100% différent.
+
+---
+
+### ⚡ INSTALLATION RAILWAY (1 MINUTE)
 
 **1. Fork ce repo**
-**2. Deploy sur Railway.app**
-- Connecte ton GitHub
-- Choisis KATSHA-MB
+Clique sur `Fork` en haut à droite
 
-**3. Variables d'environnement :**
+**2. Deploy sur Railway**
+- Va sur `railway.app`
+- `New Project` > `Deploy from GitHub repo`
+- Sélectionne `KATSHA-MB`
+
+**3. Variables**
+Ajoute dans `Variables` :
