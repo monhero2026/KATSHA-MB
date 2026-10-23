@@ -16,7 +16,7 @@
 > **Dashboard** en temps réel
 > Rapide, Stable, Original
 
-Modèle perso KATSHA MB, inspiré par Atsushi MD mais code 100% différent.
+Modèle perso KATSHA MB.
 
 ---
 
