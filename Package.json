@@ -1,0 +1,15 @@
+{
+  "name": "katsha-mb",
+  "version": "1.0.0",
+  "description": "KATSHA MB MD Bot - Original",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.8",
+    "pino": "^8.16.2",
+    "express": "^4.18.2",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
