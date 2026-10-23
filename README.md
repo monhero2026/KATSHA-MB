@@ -22,14 +22,14 @@
 > **Dashboard** en temps réel
 > Rapide, Stable, Sécurisé
 
-Bot Original **KATSHA MB**, build perso inspiré d'Atsushi MD mais code 100% refait.
+Bot Original **KATSHA MB**, build perso 100% original créé à Lubumbashi.
 
 ---
 
 ### ⚡ DEPLOIEMENT RAILWAY - 1 MINUTE
 
 **1. Fork ce repo**
-Clique sur `Fork` en haut à droite de cette page.
+Clique sur `Fork` en haut à droite.
 
 **2. Va sur Railway**
 - Ouvre `railway.app`
@@ -37,5 +37,5 @@ Clique sur `Fork` en haut à droite de cette page.
 - `New Project` > `Deploy from GitHub repo`
 - Choisis `KATSHA-MB`
 
-**3. Variables d'environnement**
+**3. Variables**
 Dans Railway > `Variables` > Ajoute :
