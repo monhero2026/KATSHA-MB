@@ -9,6 +9,7 @@ const {
 } = require('@whiskeysockets/baileys')
 const express = require('express')
 const pino = require('pino')
+const fs = require('fs') // ✅ AJOUT 1 : fs ajouté en haut
 const { Sticker, StickerTypes } = require('wa-sticker-formatter')
 
 const app = express()
@@ -31,6 +32,8 @@ const CONFIG = {
 
 // ===== ÉTAT GLOBAL =====
 let sock = null
+let pairingCodeRequested = false
+
 const STATS = {
   isConnected: false,
   startTime: Date.now(),
@@ -166,20 +169,15 @@ app.get('/', (req, res) => {
 app.get('/api/stats', (req, res) => res.json({ ...STATS, uptime: Math.floor((Date.now() - STATS.startTime) / 1000) }))
 app.get('/ping', (req, res) => res.status(200).send('Pong! KATSHA MB est réveillé.'))
 
-// ===== PAGE PAIR (AVEC RETRY DE 3 SECONDES) =====
+// ===== PAGE PAIR =====
 app.get('/pair', async (req, res) => {
   let number = req.query.number
   if (!number) return res.redirect('/')
   number = number.replace(/[^0-9]/g, '')
 
-  // ⚡ FIX : Attendre max 3 secondes que le sock soit prêt
-  let attempts = 0
-  while (!sock && attempts < 6) {
-    await new Promise(resolve => setTimeout(resolve, 500))
-    attempts++
+  if (!sock) {
+    return res.send('<div style="padding:40px;text-align:center;font-family:sans-serif;color:white;background:#050505;min-height:100vh;"><h2>⏳ Le bot démarre...</h2><p>Le serveur Render se réveille. Patiente 10 secondes et rafraîchis cette page.</p><a href="/pair?number=' + number + '" style="display:inline-block;margin-top:20px;padding:12px 24px;background:#25D366;color:black;text-decoration:none;border-radius:8px;font-weight:bold;">🔄 Réessayer</a></div>')
   }
-
-  if (!sock) return res.send('<div style="padding:40px;text-align:center;font-family:sans-serif;color:white;background:#050505;min-height:100vh;"><h2>⏳ Le bot démarre...</h2><p>Le serveur Render se réveille. Patiente 10 secondes et rafraîchis cette page.</p><a href="/pair?number=' + number + '" style="display:inline-block;margin-top:20px;padding:12px 24px;background:#25D366;color:black;text-decoration:none;border-radius:8px;font-weight:bold;">🔄 Réessayer</a></div>')
 
   try {
     const code = await sock.requestPairingCode(number)
@@ -211,28 +209,39 @@ async function startBot() {
     version,
     logger: pino({ level: 'silent' }),
     auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'silent' })) },
-    browser: Browsers.macOS('Desktop')
+    browser: Browsers.macOS('Desktop'),
+    connectTimeoutMs: 60000, 
+    defaultQueryTimeoutMs: 0,
+    keepAliveIntervalMs: 10000
   })
 
   sock.ev.on('creds.update', saveCreds)
 
-  sock.ev.on('connection.update', (update) => {
-    const { connection, lastDisconnect } = update
+  sock.ev.on('connection.update', async (update) => {
+    const { connection, lastDisconnect, qr } = update;
+    
+    // ✅ AJOUT 2 : Condition simplifiée selon Meta AI
+    if (qr && !pairingCodeRequested) {
+      pairingCodeRequested = true;
+      console.log("✅ Socket prêt pour le Pair Code.");
+    }
+
     if (connection === 'open') { 
       STATS.isConnected = true; 
       console.log(`✅ ${CONFIG.BOT_NAME} CONNECTÉ`) 
     }
+    
     if (connection === 'close') {
       STATS.isConnected = false
       const code = lastDisconnect?.error?.output?.statusCode
       
-      // ⚡ FIX : Clean restart si la connexion est perdue
       if (code !== DisconnectReason.loggedOut) {
-        console.log(`🔁 Reconnexion dans 3s (Code: ${code})...`)
-        sock = null // On réinitialise pour que /pair attende le nouveau sock
+        console.log(`🔁 Reconnexion dans 3s...`)
+        sock = null 
+        pairingCodeRequested = false;
         setTimeout(startBot, 3000)
       } else {
-        console.log('❌ Déconnecté (loggedOut). Re-scanne le QR.')
+        console.log('❌ Déconnecté (loggedOut).')
       }
     }
   })
@@ -350,9 +359,7 @@ setInterval(() => {
 // Self-ping local pour Render
 setInterval(() => {
   const http = require('http');
-  http.get(`http://localhost:${PORT}/ping`, (res) => {
-    // Ce ping interne garde Render éveillé
-  }).on('error', (err) => console.log('Self-ping error:', err.message));
+  http.get(`http://localhost:${PORT}/ping`, (res) => {}).on('error', () => {});
 }, 4 * 60 * 1000);
 
 // ===== LANCEMENT =====
