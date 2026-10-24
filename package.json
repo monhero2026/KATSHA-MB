@@ -15,7 +15,23 @@
     "pino": "^8.16.2",
     "express": "^4.18.2"
   },
-  "keywords": ["whatsapp", "bot", "baileys", "katsha"],
-  "author": "KATSHA MB",
-  "license": "MIT"
+  "keywords": [
+    "whatsapp",
+    "bot",
+    "baileys",
+    "katsha",
+    "multi-device",
+    "pair-code"
+  ],
+  "author": "Kanko Tshamala (KATSHA MB) <katsha@example.com> (https://github.com/katsha-mb)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/katsha-mb/KATSHA-MB.git"
+  },
+  "bugs": {
+    "url": "https://github.com/katsha-mb/KATSHA-MB/issues"
+  },
+  "homepage": "https://github.com/katsha-mb/KATSHA-MB#readme",
+  "private": true
 }
