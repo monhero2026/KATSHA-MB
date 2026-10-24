@@ -1,15 +1,21 @@
 {
   "name": "katsha-mb",
-  "version": "1.0.0",
-  "description": "KATSHA MB MD Bot - Original",
+  "version": "2.0.0",
+  "description": "KATSHA MB MD Bot - V2 FULL (AutoLike + AntiCall + AntiLink)",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "^6.7.8",
     "pino": "^8.16.2",
-    "express": "^4.18.2",
-    "qrcode-terminal": "^0.12.0"
-  }
+    "express": "^4.18.2"
+  },
+  "keywords": ["whatsapp", "bot", "baileys", "katsha"],
+  "author": "KATSHA MB",
+  "license": "MIT"
 }
